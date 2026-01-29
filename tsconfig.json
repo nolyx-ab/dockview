@@ -14,6 +14,9 @@
             "path": "./packages/dockview-react"
         },
         {
+            "path": "./packages/dockview-react-declarative"
+        },
+        {
             "path": "./packages/dockview-angular"
         }
     ]

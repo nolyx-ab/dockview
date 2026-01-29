@@ -3,6 +3,7 @@
     "packages/dockview-core",
     "packages/dockview-vue",
     "packages/dockview-react",
+    "packages/dockview-react-declarative",
     "packages/dockview"
   ],
   "sandboxes": [

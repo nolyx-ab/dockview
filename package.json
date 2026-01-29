@@ -16,8 +16,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build --scope '{dockview-core,dockview,dockview-vue,dockview-react,dockview-angular}'",
-    "build:bundle": "lerna run build:bundle --scope '{dockview-core,dockview,dockview-vue,dockview-react,dockview-angular}'",
+    "build": "lerna run build --scope '{dockview-core,dockview,dockview-vue,dockview-react,dockview-react-declarative,dockview-angular}'",
+    "build:bundle": "lerna run build:bundle --scope '{dockview-core,dockview,dockview-vue,dockview-react,dockview-react-declarative,dockview-angular}'",
     "clean": "lerna run clean",
     "docs": "typedoc && node scripts/docs.mjs",
     "lint": "eslint 'packages/*/src/**/*.{ts,tsx,js,jsx}'",

@@ -48,6 +48,7 @@
   "devDependencies": {
     "@tsconfig/docusaurus": "^2.0.2",
     "@types/uuid": "^9.0.7",
+    "concurrently": "^9.2.1",
     "docusaurus-plugin-sass": "^0.2.5"
   }
 }
