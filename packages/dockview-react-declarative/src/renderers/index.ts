@@ -1,0 +1,1 @@
+export { DeclarativeContentRenderer } from './DeclarativeContentRenderer';

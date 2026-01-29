@@ -15,3 +15,5 @@ yarn-error.log
 /build
 /docs/
 /generated/
+nul
+settings.local.json

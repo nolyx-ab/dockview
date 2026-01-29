@@ -1,0 +1,50 @@
+{
+  "name": "dockview-react-declarative",
+  "version": "4.13.1",
+  "description": "Declarative JSX-based API for dockview layout manager",
+  "keywords": [
+    "dockview",
+    "react",
+    "declarative",
+    "jsx",
+    "layout",
+    "layout manager",
+    "dock",
+    "tabs",
+    "panels"
+  ],
+  "homepage": "https://github.com/mathuo/dockview",
+  "bugs": {
+    "url": "https://github.com/mathuo/dockview/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathuo/dockview.git"
+  },
+  "license": "MIT",
+  "author": "https://github.com/mathuo",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build:cjs": "cross-env ../../node_modules/.bin/tsc --build ./tsconfig.json --verbose --extendedDiagnostics",
+    "build:esm": "cross-env ../../node_modules/.bin/tsc --build ./tsconfig.esm.json --verbose --extendedDiagnostics",
+    "build": "npm run build:cjs && npm run build:esm",
+    "clean": "rimraf dist/ .build/",
+    "prepublishOnly": "npm run rebuild && npm run test",
+    "rebuild": "npm run clean && npm run build",
+    "test": "cross-env ../../node_modules/.bin/jest --selectProjects dockview-react-declarative",
+    "test:cov": "cross-env ../../node_modules/.bin/jest --selectProjects dockview-react-declarative --coverage"
+  },
+  "dependencies": {
+    "dockview-core": "^4.13.1"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  }
+}
