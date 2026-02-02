@@ -1,11 +1,5 @@
-import React, {
-    createContext,
-    useContext,
-    useRef,
-    useMemo,
-    useSyncExternalStore,
-} from 'react';
-import { createPortal } from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { DockviewIDisposable, DockviewDisposable } from 'dockview-core';
 
 /**
@@ -24,7 +18,7 @@ export interface PortalEntry {
 
 /**
  * PortalStore manages portal state externally from React's render cycle.
- * It implements the useSyncExternalStore contract for React 18+ concurrent features.
+ * It implements the React.useSyncExternalStore contract for React 18+ concurrent features.
  */
 export class PortalStore {
     private portals: Map<string, PortalEntry> = new Map();
@@ -33,7 +27,7 @@ export class PortalStore {
 
     /**
      * Subscribes a listener to be notified when portal state changes.
-     * This follows the useSyncExternalStore subscribe signature.
+     * This follows the React.useSyncExternalStore subscribe signature.
      * @param listener - Callback to invoke when state changes
      * @returns Unsubscribe function
      */
@@ -46,7 +40,7 @@ export class PortalStore {
 
     /**
      * Returns the current snapshot of portal state.
-     * This follows the useSyncExternalStore getSnapshot signature.
+     * This follows the React.useSyncExternalStore getSnapshot signature.
      * @returns Immutable snapshot of current portals
      */
     getSnapshot = (): Map<string, PortalEntry> => {
@@ -172,7 +166,7 @@ export class PortalStore {
 /**
  * Context for providing the PortalStore to child components.
  */
-const PortalStoreContext = createContext<PortalStore | null>(null);
+const PortalStoreContext = React.createContext<PortalStore | null>(null);
 
 /**
  * Hook to access the PortalStore from within the PortalManager tree.
@@ -180,7 +174,7 @@ const PortalStoreContext = createContext<PortalStore | null>(null);
  * @returns The PortalStore instance
  */
 export function usePortalStore(): PortalStore {
-    const store = useContext(PortalStoreContext);
+    const store = React.useContext(PortalStoreContext);
     if (!store) {
         throw new Error('usePortalStore must be used within PortalManager');
     }
@@ -189,21 +183,21 @@ export function usePortalStore(): PortalStore {
 
 /**
  * Internal component that renders all portals from the store.
- * Uses useSyncExternalStore for React 18+ concurrent mode compatibility.
+ * Uses React.useSyncExternalStore for React 18+ concurrent mode compatibility.
  */
 function PortalRenderer({ store }: { store: PortalStore }): JSX.Element {
-    const portals = useSyncExternalStore(
+    const portals = React.useSyncExternalStore(
         store.subscribe,
         store.getSnapshot,
         store.getServerSnapshot
     );
 
-    const portalElements = useMemo(() => {
+    const portalElements = React.useMemo(() => {
         const elements: React.ReactPortal[] = [];
 
         for (const entry of portals.values()) {
             elements.push(
-                createPortal(entry.content, entry.container, entry.key)
+                ReactDOM.createPortal(entry.content, entry.container, entry.key)
             );
         }
 
@@ -238,7 +232,7 @@ export interface PortalManagerProps {
  */
 export function PortalManager({ children }: PortalManagerProps): JSX.Element {
     // Create store once and keep it stable across renders
-    const storeRef = useRef<PortalStore | null>(null);
+    const storeRef = React.useRef<PortalStore | null>(null);
 
     if (storeRef.current === null) {
         storeRef.current = new PortalStore();

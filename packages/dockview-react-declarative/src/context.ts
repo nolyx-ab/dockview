@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import React from 'react';
 import { DockviewApi, DockviewPanelApi } from 'dockview-core';
 import { PanelDefinition } from './types';
 
@@ -25,7 +25,7 @@ export interface DockviewContextValue {
  * React context for the Dockview container
  * Provides access to the container-level API and panel management functions
  */
-export const DockviewContext = createContext<DockviewContextValue | null>(null);
+export const DockviewContext = React.createContext<DockviewContextValue | null>(null);
 
 // =============================================================================
 // Panel-Level Context
@@ -48,4 +48,4 @@ export interface PanelContextValue<P = Record<string, unknown>> {
  * React context for individual panels
  * Provides access to the panel-level API and parameters
  */
-export const PanelContext = createContext<PanelContextValue | null>(null);
+export const PanelContext = React.createContext<PanelContextValue | null>(null);

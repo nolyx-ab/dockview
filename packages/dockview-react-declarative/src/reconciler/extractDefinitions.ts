@@ -1,4 +1,4 @@
-import React, { Children, isValidElement } from 'react';
+import React from 'react';
 import { PanelDefinition, DockviewPanelProps } from '../types';
 
 /**
@@ -8,8 +8,8 @@ import { PanelDefinition, DockviewPanelProps } from '../types';
 export function extractPanelDefinitions(children: React.ReactNode): PanelDefinition[] {
   const definitions: PanelDefinition[] = [];
 
-  Children.forEach(children, (child) => {
-    if (!isValidElement(child)) return;
+  React.Children.forEach(children, (child) => {
+    if (!React.isValidElement(child)) return;
 
     // Check if it's a DockviewPanel by checking displayName or type
     if (isDockviewPanelElement(child)) {

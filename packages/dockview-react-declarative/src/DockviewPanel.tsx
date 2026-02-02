@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useContext, useEffect, useRef } from 'react';
+import React from 'react';
 import { DockviewContext } from './context';
 import {
     DockviewPanelProps,
@@ -63,13 +62,13 @@ function createPanelDefinition<P = Record<string, unknown>>(
 function DockviewPanelComponent<P = Record<string, unknown>>(
     props: DockviewPanelProps<P>
 ): null {
-    const context = useContext(DockviewContext);
+    const context = React.useContext(DockviewContext);
 
     // Track whether this is the first render (for registration vs update)
-    const isFirstRender = useRef(true);
+    const isFirstRender = React.useRef(true);
 
     // Track previous props to detect changes
-    const prevPropsRef = useRef<DockviewPanelProps<P>>(props);
+    const prevPropsRef = React.useRef<DockviewPanelProps<P>>(props);
 
     if (context === null) {
         throw new Error(
@@ -81,7 +80,7 @@ function DockviewPanelComponent<P = Record<string, unknown>>(
     const { registerPanel, unregisterPanel, updatePanel } = context;
 
     // Register on mount, unregister on unmount
-    useEffect(() => {
+    React.useEffect(() => {
         const definition = createPanelDefinition(props);
         registerPanel(definition as PanelDefinition);
 
@@ -93,7 +92,7 @@ function DockviewPanelComponent<P = Record<string, unknown>>(
     }, []);
 
     // Handle prop updates after initial registration
-    useEffect(() => {
+    React.useEffect(() => {
         // Skip the first render since we handle registration above
         if (isFirstRender.current) {
             isFirstRender.current = false;

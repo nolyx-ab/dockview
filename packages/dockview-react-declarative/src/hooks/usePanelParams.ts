@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React from 'react';
 import { PanelContext } from '../context';
 
 /**
@@ -30,7 +30,7 @@ import { PanelContext } from '../context';
 export function usePanelParams<
     P extends Record<string, unknown> = Record<string, unknown>
 >(): P {
-    const context = useContext(PanelContext);
+    const context = React.useContext(PanelContext);
 
     if (!context) {
         throw new Error(

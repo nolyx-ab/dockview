@@ -1,15 +1,11 @@
+import ReactDOM from 'react-dom/client';
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import 'dockview-core/dist/styles/dockview.css';
-import { DeclarativeApiExample } from './app';
+import 'dockview/dist/styles/dockview.css';
+import { DeclarativeApiExample } from './app.tsx';
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById('app');
 
 if (rootElement) {
-    const root = createRoot(rootElement);
-    root.render(
-        <React.StrictMode>
-            <DeclarativeApiExample theme="dockview-theme-abyss" />
-        </React.StrictMode>
-    );
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<DeclarativeApiExample theme="dockview-theme-abyss" />);
 }

@@ -6,7 +6,7 @@
         "target": "es6",
         "outDir": "dist/esm",
         "tsBuildInfoFile": ".build/tsconfig.tsbuildinfo.esm",
-        "jsx": "react-jsx",
+        "jsx": "react",
         "rootDir": "src"
     },
     "include": ["src"],

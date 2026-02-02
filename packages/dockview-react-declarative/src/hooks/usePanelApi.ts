@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React from 'react';
 import { DockviewPanelApi } from 'dockview-core';
 import { PanelContext } from '../context';
 
@@ -27,7 +27,7 @@ import { PanelContext } from '../context';
  * ```
  */
 export function usePanelApi(): DockviewPanelApi {
-    const context = useContext(PanelContext);
+    const context = React.useContext(PanelContext);
 
     if (!context) {
         throw new Error(

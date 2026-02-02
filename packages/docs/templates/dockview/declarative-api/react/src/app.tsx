@@ -5,30 +5,36 @@
  * are defined as React children instead of using api.addPanel().
  */
 
-import React, { useRef, useState } from 'react';
-import {
+import React from 'react';
+import * as DockviewDeclarative from 'dockview-react-declarative';
+
+const {
     Dockview,
     DockviewPanel,
-    DockviewHandle,
-    DockviewReadyEvent,
-    DockviewApi,
     usePanelApi,
     usePanelParams,
-    DockviewPanelRenderProps,
-    DockviewHeaderActionsProps,
-} from 'dockview-react-declarative';
-import 'dockview-core/dist/styles/dockview.css';
+} = DockviewDeclarative;
+
+type DockviewHandle = DockviewDeclarative.DockviewHandle;
+type DockviewReadyEvent = DockviewDeclarative.DockviewReadyEvent;
+type DockviewApi = DockviewDeclarative.DockviewApi;
+type DockviewPanelRenderProps<T> = DockviewDeclarative.DockviewPanelRenderProps<T>;
+type DockviewHeaderActionsProps = DockviewDeclarative.DockviewHeaderActionsProps;
 
 // =============================================================================
 // Panel Components
 // =============================================================================
+
+// Type aliases to avoid inline generics that systemjs-babel can't parse
+type MessageParams = { message?: string };
+type CountParams = { count: number };
 
 /**
  * A simple panel component that uses hooks to access the panel API
  */
 function SimplePanelWithHooks() {
     const api = usePanelApi();
-    const params = usePanelParams<{ message?: string }>();
+    const params = usePanelParams<MessageParams>();
 
     return (
         <div
@@ -54,7 +60,7 @@ function PanelWithRenderProps({
     api,
     containerApi,
     params,
-}: DockviewPanelRenderProps<{ count: number }>) {
+}: DockviewPanelRenderProps<CountParams>) {
     return (
         <div
             style={{
@@ -89,11 +95,11 @@ function HeaderActions({ containerApi, isGroupActive }: DockviewHeaderActionsPro
 // =============================================================================
 
 export function DeclarativeApiExample(props: { theme?: string }) {
-    const dockviewRef = useRef<DockviewHandle>(null);
-    const [api, setApi] = useState<DockviewApi>();
-    const [panelCount, setPanelCount] = useState(0);
-    const [showFloating, setShowFloating] = useState(true);
-    const [showConditional, setShowConditional] = useState(false);
+    const dockviewRef = React.useRef<DockviewHandle>(null);
+    const [api, setApi] = React.useState<DockviewApi>();
+    const [panelCount, setPanelCount] = React.useState(0);
+    const [showFloating, setShowFloating] = React.useState(true);
+    const [showConditional, setShowConditional] = React.useState(false);
 
     const onReady = (event: DockviewReadyEvent) => {
         setApi(event.api);

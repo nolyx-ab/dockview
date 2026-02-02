@@ -1,12 +1,4 @@
-import React, {
-    forwardRef,
-    useRef,
-    useState,
-    useEffect,
-    useMemo,
-    useCallback,
-    useImperativeHandle,
-} from 'react';
+import React from 'react';
 import {
     createDockview,
     DockviewApi,
@@ -445,22 +437,22 @@ interface InnerDockviewProps extends DockviewProps {
 /**
  * Inner component that has access to the portal store via context
  */
-const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
+const InnerDockview = React.forwardRef<DockviewHandle, InnerDockviewProps>(
     function InnerDockview(props, ref) {
         const { portalStore, children, className, style, onReady } = props;
 
         // Refs
-        const containerRef = useRef<HTMLDivElement>(null);
-        const apiRef = useRef<DockviewApi | null>(null);
-        const reconcilerRef = useRef<PanelReconciler | null>(null);
-        const panelDefinitionsRef = useRef<Map<string, PanelDefinition>>(new Map());
-        const prevPropsRef = useRef<Partial<DockviewProps>>({});
+        const containerRef = React.useRef<HTMLDivElement>(null);
+        const apiRef = React.useRef<DockviewApi | null>(null);
+        const reconcilerRef = React.useRef<PanelReconciler | null>(null);
+        const panelDefinitionsRef = React.useRef<Map<string, PanelDefinition>>(new Map());
+        const prevPropsRef = React.useRef<Partial<DockviewProps>>({});
 
         // State
-        const [isReady, setIsReady] = useState(false);
+        const [isReady, setIsReady] = React.useState(false);
 
         // Expose imperative handle
-        useImperativeHandle(
+        React.useImperativeHandle(
             ref,
             () => ({
                 getApi: () => apiRef.current,
@@ -472,12 +464,12 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         );
 
         // Function to get panel definition by ID
-        const getPanelDefinition = useCallback((id: string): PanelDefinition | undefined => {
+        const getPanelDefinition = React.useCallback((id: string): PanelDefinition | undefined => {
             return panelDefinitionsRef.current.get(id);
         }, []);
 
         // Initialize dockview on mount
-        useEffect(() => {
+        React.useEffect(() => {
             if (!containerRef.current) {
                 return;
             }
@@ -552,7 +544,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, []);
 
         // Handle options updates
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -574,7 +566,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, PROPERTY_KEYS_DOCKVIEW.map((key) => (props as any)[key]));
 
         // Subscribe to onDidDrop events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -587,7 +579,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidDrop]);
 
         // Subscribe to onWillDrop events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -600,7 +592,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onWillDrop]);
 
         // Subscribe to onWillShowOverlay events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -613,7 +605,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onWillShowOverlay]);
 
         // Subscribe to onDidAddPanel events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -626,7 +618,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidAddPanel]);
 
         // Subscribe to onDidRemovePanel events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -639,7 +631,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidRemovePanel]);
 
         // Subscribe to onDidActivePanelChange events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -652,7 +644,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidActivePanelChange]);
 
         // Subscribe to onDidMovePanel events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -665,7 +657,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidMovePanel]);
 
         // Subscribe to onDidAddGroup events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -678,7 +670,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidAddGroup]);
 
         // Subscribe to onDidRemoveGroup events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -691,7 +683,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidRemoveGroup]);
 
         // Subscribe to onDidActiveGroupChange events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -704,7 +696,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidActiveGroupChange]);
 
         // Subscribe to onWillDragGroup events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -717,7 +709,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onWillDragGroup]);
 
         // Subscribe to onWillDragPanel events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -730,7 +722,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onWillDragPanel]);
 
         // Subscribe to onUnhandledDragOverEvent events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -743,7 +735,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onUnhandledDragOverEvent]);
 
         // Subscribe to onDidLayoutChange events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -756,7 +748,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidLayoutChange]);
 
         // Subscribe to onDidLayoutFromJSON events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -769,7 +761,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidLayoutFromJSON]);
 
         // Subscribe to onDidMaximizedGroupChange events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -782,7 +774,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidMaximizedGroupChange]);
 
         // Subscribe to onDidPopoutGroupSizeChange events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -795,7 +787,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidPopoutGroupSizeChange]);
 
         // Subscribe to onDidPopoutGroupPositionChange events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -808,7 +800,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidPopoutGroupPositionChange]);
 
         // Subscribe to onDidOpenPopoutWindowFail events
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -821,7 +813,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.onDidOpenPopoutWindowFail]);
 
         // Update header action components when they change
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -834,7 +826,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
             });
         }, [props.rightHeaderActionsComponent, portalStore]);
 
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -847,7 +839,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
             });
         }, [props.leftHeaderActionsComponent, portalStore]);
 
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -861,7 +853,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.prefixHeaderActionsComponent, portalStore]);
 
         // Update watermark component when it changes
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -878,7 +870,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.watermarkComponent, portalStore]);
 
         // Update default tab component when it changes
-        useEffect(() => {
+        React.useEffect(() => {
             if (!apiRef.current) {
                 return;
             }
@@ -899,7 +891,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [props.defaultTabComponent, portalStore]);
 
         // Create context value
-        const contextValue = useMemo<DockviewContextValue>(
+        const contextValue = React.useMemo<DockviewContextValue>(
             () => ({
                 api: apiRef.current,
                 registerPanel: (definition: PanelDefinition) => {
@@ -922,7 +914,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         );
 
         // Extract panel definitions from children and reconcile
-        useEffect(() => {
+        React.useEffect(() => {
             if (!isReady || !reconcilerRef.current) {
                 return;
             }
@@ -939,7 +931,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
         }, [children, isReady]);
 
         // Container styles
-        const containerStyle: React.CSSProperties = useMemo(
+        const containerStyle: React.CSSProperties = React.useMemo(
             () => ({
                 height: '100%',
                 width: '100%',
@@ -988,7 +980,7 @@ const InnerDockview = forwardRef<DockviewHandle, InnerDockviewProps>(
  * }
  * ```
  */
-export const Dockview = forwardRef<DockviewHandle, DockviewProps>(
+export const Dockview = React.forwardRef<DockviewHandle, DockviewProps>(
     function Dockview(props, ref) {
         return (
             <PortalManager>
@@ -1003,7 +995,7 @@ Dockview.displayName = 'Dockview';
 /**
  * Internal component that retrieves the portal store from context
  */
-const DockviewWithPortalStore = forwardRef<DockviewHandle, DockviewProps>(
+const DockviewWithPortalStore = React.forwardRef<DockviewHandle, DockviewProps>(
     function DockviewWithPortalStore(props, ref) {
         const portalStore = usePortalStore();
         return <InnerDockview {...props} portalStore={portalStore} ref={ref} />;

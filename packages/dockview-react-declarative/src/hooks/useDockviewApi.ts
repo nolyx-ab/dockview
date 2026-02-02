@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React from 'react';
 import { DockviewApi } from 'dockview-core';
 import { DockviewContext } from '../context';
 
@@ -23,7 +23,7 @@ import { DockviewContext } from '../context';
  * ```
  */
 export function useDockviewApi(): DockviewApi {
-    const context = useContext(DockviewContext);
+    const context = React.useContext(DockviewContext);
 
     if (!context) {
         throw new Error(

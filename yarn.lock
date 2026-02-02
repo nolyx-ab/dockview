@@ -11486,7 +11486,7 @@ __metadata:
     axios: "npm:^1.6.3"
     clsx: "npm:^2.1.0"
     concurrently: "npm:^9.2.1"
-    dockview: "npm:^4.13.1"
+    dockview: "npm:*"
     docusaurus-plugin-sass: "npm:^0.2.5"
     prism-react-renderer: "npm:^2.3.1"
     react-dnd: "npm:^16.0.1"
@@ -11583,7 +11583,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"dockview@npm:^4.13.1, dockview@workspace:packages/dockview":
+"dockview@npm:*, dockview@npm:^4.13.1, dockview@workspace:packages/dockview":
   version: 0.0.0-use.local
   resolution: "dockview@workspace:packages/dockview"
   dependencies:

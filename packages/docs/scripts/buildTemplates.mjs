@@ -26,10 +26,14 @@ const DOCKVIEW_CDN = {
         remote: {
             dockview: `https://cdn.jsdelivr.net/npm/dockview@${DOCKVIEW_VERSION}/dist/dockview.esm.js`,
             'dockview/': `https://cdn.jsdelivr.net/npm/dockview@${DOCKVIEW_VERSION}/`,
+            'dockview-react-declarative': `https://cdn.jsdelivr.net/npm/dockview-react-declarative@${DOCKVIEW_VERSION}/dist/dockview-react-declarative.esm.js`,
+            'dockview-react-declarative/': `https://cdn.jsdelivr.net/npm/dockview-react-declarative@${DOCKVIEW_VERSION}/`,
         },
         local: {
             dockview: `${local}/dockview/dist/dockview.esm.js`,
             'dockview/': `${local}/dockview/`,
+            'dockview-react-declarative': `${local}/dockview-react-declarative/dist/dockview-react-declarative.esm.js`,
+            'dockview-react-declarative/': `${local}/dockview-react-declarative/`,
         },
     },
     vue: {
@@ -171,7 +175,7 @@ const FRAMEWORKS = ['react', 'vue', 'typescript', 'angular'];
 
 const COMPONENT_SELECTORS = {
     'dockview': '.dv-dockview',
-    'splitview': '.dv-split-view-container', 
+    'splitview': '.dv-split-view-container',
     'gridview': '.dv-grid-view',
     'paneview': '.dv-pane-container'
 };
