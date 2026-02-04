@@ -20,6 +20,15 @@ import {
     PopoutGroupChangeSizeEvent,
     PopoutGroupChangePositionEvent,
     IDockviewGroupPanel,
+    // Splitview imports
+    SplitviewApi,
+    SplitviewPanelApi,
+    SplitviewOptions,
+    ISplitviewPanel,
+    SerializedSplitview,
+    Orientation,
+    LayoutPriority,
+    IView,
 } from 'dockview-core';
 
 /**
@@ -470,4 +479,212 @@ export {
     DockviewMaximizedGroupChanged,
     PopoutGroupChangeSizeEvent,
     PopoutGroupChangePositionEvent,
+    // Splitview exports
+    SplitviewApi,
+    SplitviewPanelApi,
+    SplitviewOptions,
+    ISplitviewPanel,
+    SerializedSplitview,
+    Orientation,
+    LayoutPriority,
+    IView,
 } from 'dockview-core';
+
+// =============================================================================
+// Splitview Panel Render Props
+// =============================================================================
+
+/**
+ * Props passed to splitview panel render functions
+ */
+export interface SplitviewPanelRenderProps<P = Record<string, unknown>> {
+    /** API for the individual panel */
+    api: SplitviewPanelApi;
+    /** API for the splitview container */
+    containerApi: SplitviewApi;
+    /** Custom parameters passed to the panel */
+    params: P;
+}
+
+// =============================================================================
+// Splitview Panel Event Callbacks
+// =============================================================================
+
+/**
+ * Event callbacks for individual splitview panels
+ */
+export interface SplitviewPanelCallbacks {
+    /** Called when the panel receives focus */
+    onDidFocus?: () => void;
+    /** Called when the panel loses focus */
+    onDidBlur?: () => void;
+    /** Called when the panel's visibility changes */
+    onDidChangeVisibility?: (isVisible: boolean) => void;
+}
+
+// =============================================================================
+// Splitview Panel Props
+// =============================================================================
+
+/**
+ * Props for the `<SplitviewPanel>` component
+ */
+export interface SplitviewPanelProps<P = Record<string, unknown>>
+    extends SplitviewPanelCallbacks {
+    /** Unique identifier for the panel */
+    id: string;
+    /**
+     * Panel content - either React nodes or a render function
+     * that receives panel props
+     */
+    children:
+        | React.ReactNode
+        | ((props: SplitviewPanelRenderProps<P>) => React.ReactNode);
+    /** Custom parameters passed to the panel */
+    params?: P;
+    /** The index at which to insert the panel */
+    index?: number;
+    /** Initial size of the panel */
+    size?: number;
+    /** Minimum size constraint for the panel */
+    minimumSize?: number;
+    /** Maximum size constraint for the panel */
+    maximumSize?: number;
+    /** Whether the panel should snap when resized */
+    snap?: boolean;
+    /** Layout priority for the panel */
+    priority?: LayoutPriority;
+}
+
+// =============================================================================
+// Splitview Panel Definition (Internal)
+// =============================================================================
+
+/**
+ * Internal type representing an extracted splitview panel definition
+ * Used by the reconciler to track panel configurations
+ */
+export interface SplitviewPanelDefinition<P = Record<string, unknown>> {
+    /** Unique identifier for the panel */
+    id: string;
+    /** The content to render (React node or render function) */
+    content:
+        | React.ReactNode
+        | ((props: SplitviewPanelRenderProps<P>) => React.ReactNode);
+    /** Custom parameters passed to the panel */
+    params?: P;
+    /** The index at which to insert the panel */
+    index?: number;
+    /** Initial size of the panel */
+    size?: number;
+    /** Minimum size constraint for the panel */
+    minimumSize?: number;
+    /** Maximum size constraint for the panel */
+    maximumSize?: number;
+    /** Whether the panel should snap when resized */
+    snap?: boolean;
+    /** Layout priority for the panel */
+    priority?: LayoutPriority;
+    /** Event callbacks for the panel */
+    callbacks: SplitviewPanelCallbacks;
+}
+
+// =============================================================================
+// Splitview Event Callbacks
+// =============================================================================
+
+/**
+ * Event callbacks for the Splitview container
+ */
+export interface SplitviewEventCallbacks {
+    /** Called when a view is added */
+    onDidAddView?: (view: IView) => void;
+    /** Called when a view is removed */
+    onDidRemoveView?: (view: IView) => void;
+    /** Called when the layout changes */
+    onDidLayoutChange?: () => void;
+    /** Called after layout is loaded from JSON */
+    onDidLayoutFromJSON?: () => void;
+}
+
+// =============================================================================
+// Splitview Ready Event
+// =============================================================================
+
+/**
+ * Event fired when the Splitview component is ready
+ */
+export interface SplitviewReadyEvent {
+    /** API for the splitview container */
+    api: SplitviewApi;
+}
+
+// =============================================================================
+// Splitview Props
+// =============================================================================
+
+/**
+ * Options from SplitviewOptions that should be excluded from props
+ * (framework-specific options that are handled differently)
+ */
+type ExcludedSplitviewOptions = 'className';
+
+/**
+ * Props for the main `<Splitview>` container component
+ */
+export interface SplitviewProps
+    extends Omit<SplitviewOptions, ExcludedSplitviewOptions>,
+        SplitviewEventCallbacks {
+    /** Child SplitviewPanel elements */
+    children: React.ReactNode;
+    /** Called when the Splitview component is ready */
+    onReady?: (event: SplitviewReadyEvent) => void;
+    /** CSS class name for the container */
+    className?: string;
+    /** Inline styles for the container */
+    style?: React.CSSProperties;
+}
+
+// =============================================================================
+// Splitview Imperative Handle
+// =============================================================================
+
+/**
+ * Imperative handle for the Splitview component (accessible via ref)
+ */
+export interface SplitviewHandle {
+    /**
+     * Get the SplitviewApi instance
+     * @returns The API or null if not yet initialized
+     */
+    getApi(): SplitviewApi | null;
+    /**
+     * Serialize the current layout to JSON
+     * @returns The serialized layout
+     */
+    toJSON(): SerializedSplitview;
+    /**
+     * Restore the layout from a serialized state
+     * @param data - The serialized layout to restore
+     */
+    fromJSON(data: SerializedSplitview): void;
+    /**
+     * Focus the splitview component
+     */
+    focus(): void;
+}
+
+// =============================================================================
+// Splitview Render Function Type Guard
+// =============================================================================
+
+/**
+ * Type guard to check if children is a splitview render function
+ */
+export function isSplitviewRenderFunction<P>(
+    children:
+        | React.ReactNode
+        | ((props: SplitviewPanelRenderProps<P>) => React.ReactNode)
+): children is (props: SplitviewPanelRenderProps<P>) => React.ReactNode {
+    return typeof children === 'function';
+}

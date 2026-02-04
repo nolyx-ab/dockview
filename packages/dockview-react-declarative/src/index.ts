@@ -30,14 +30,21 @@
 export * from 'dockview-core';
 
 // =============================================================================
-// Main Components
+// Main Components - Dockview
 // =============================================================================
 
 export { Dockview } from './Dockview';
 export { DockviewPanel } from './DockviewPanel';
 
 // =============================================================================
-// Hooks
+// Main Components - Splitview
+// =============================================================================
+
+export { Splitview } from './Splitview';
+export { SplitviewPanel } from './SplitviewPanel';
+
+// =============================================================================
+// Hooks - Dockview
 // =============================================================================
 
 export { useDockviewApi } from './hooks/useDockviewApi';
@@ -45,14 +52,22 @@ export { usePanelApi } from './hooks/usePanelApi';
 export { usePanelParams } from './hooks/usePanelParams';
 
 // =============================================================================
+// Hooks - Splitview
+// =============================================================================
+
+export { useSplitviewApi } from './hooks/useSplitviewApi';
+export { useSplitviewPanelApi } from './hooks/useSplitviewPanelApi';
+export { useSplitviewPanelParams } from './hooks/useSplitviewPanelParams';
+
+// =============================================================================
 // Contexts (for advanced usage)
 // =============================================================================
 
-export { DockviewContext, PanelContext } from './context';
-export type { DockviewContextValue, PanelContextValue } from './context';
+export { DockviewContext, PanelContext, SplitviewContext, SplitviewPanelContext } from './context';
+export type { DockviewContextValue, PanelContextValue, SplitviewContextValue, SplitviewPanelContextValue } from './context';
 
 // =============================================================================
-// Types
+// Types - Dockview
 // =============================================================================
 
 export type {
@@ -80,7 +95,7 @@ export type {
     PanelDefinition,
 } from './types';
 
-// Type guards
+// Type guards - Dockview
 export {
     isPanelPositionByPanel,
     isPanelPositionByGroup,
@@ -89,7 +104,29 @@ export {
 } from './types';
 
 // =============================================================================
-// Re-exports from dockview-core
+// Types - Splitview
+// =============================================================================
+
+export type {
+    // Component Props
+    SplitviewProps,
+    SplitviewPanelProps,
+    SplitviewHandle,
+    // Render Props
+    SplitviewPanelRenderProps,
+    // Events
+    SplitviewReadyEvent,
+    SplitviewEventCallbacks,
+    SplitviewPanelCallbacks,
+    // Internal (for advanced usage)
+    SplitviewPanelDefinition,
+} from './types';
+
+// Type guards - Splitview
+export { isSplitviewRenderFunction } from './types';
+
+// =============================================================================
+// Re-exports from dockview-core - Dockview
 // =============================================================================
 
 export {
@@ -119,4 +156,25 @@ export {
     DockviewMaximizedGroupChanged,
     PopoutGroupChangeSizeEvent,
     PopoutGroupChangePositionEvent,
+} from './types';
+
+// =============================================================================
+// Re-exports from dockview-core - Splitview
+// =============================================================================
+
+export {
+    // APIs
+    SplitviewApi,
+    SplitviewPanelApi,
+    // Panels
+    ISplitviewPanel,
+    // Options
+    SplitviewOptions,
+    // Orientation
+    Orientation,
+    LayoutPriority,
+    // Serialization
+    SerializedSplitview,
+    // Events
+    IView,
 } from './types';
